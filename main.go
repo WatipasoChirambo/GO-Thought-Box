@@ -20,7 +20,7 @@ func main() {
 			title: "Buy new machine",
 		},
 		{
-			title: "create a JavaScript TwitterBot, should I?",
+			title: "create a JavaScript TwitterBot",
 		},
 	}
 	CreateThought(&thoughts)
@@ -68,6 +68,7 @@ func UpdateThought(thoughts *[]Thought, thoughtId int, newThought string){
 			(*thoughts)[index].title = newThought
 		}
 	}
+	fmt.Println("Thought updated successfully")
 }
 
 func ReadAllThoughts(thoughts *[]Thought) {
