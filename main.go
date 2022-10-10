@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"errors"
 )
 
 type Thought struct {
@@ -24,6 +25,7 @@ func main() {
 	}
 	CreateThought(&thoughts)
 	DeleteThought(&thoughts, 4)
+	fmt.Println(GetThought(&thoughts, 3))
 	ReadAllThoughts(&thoughts)
 }
 
@@ -37,16 +39,26 @@ func CreateThought(thoughts *[]Thought) {
 }
 
 func DeleteThought(thoughts *[]Thought, thoughtId int) {
-	fmt.Println(*thoughts)
 	var tempThoughts []Thought
 	tempThoughts = *thoughts
 	for index, _ := range *thoughts {
 		if index+1 == thoughtId {
 			tempThoughts = append(tempThoughts[:index], tempThoughts[index+1:]...)
 			*thoughts = tempThoughts
-			fmt.Println(*thoughts)
 		}
 	}
+}
+
+func GetThought(thoughts *[]Thought, thoughtId int) (Thought, error) {
+	var tempThoughts []Thought
+	tempThoughts = *thoughts
+
+	for index, _ := range *thoughts {
+		if index+1 == thoughtId {
+			return tempThoughts[index], errors.New("")
+		}
+	}
+	return tempThoughts[thoughtId-1], errors.New("does not exist")
 }
 
 func ReadAllThoughts(thoughts *[]Thought) {
