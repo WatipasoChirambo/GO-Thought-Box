@@ -2,9 +2,9 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"os"
-	"errors"
 )
 
 type Thought struct {
@@ -14,18 +14,18 @@ type Thought struct {
 func main() {
 	thoughts := []Thought{
 		{
-			title: "Go",
+			title: "Learn Go",
 		},
 		{
-			title: "Java",
+			title: "Buy new machine",
 		},
 		{
-			title: "JavaScript",
+			title: "create a JavaScript TwitterBot, should I?",
 		},
 	}
 	CreateThought(&thoughts)
 	DeleteThought(&thoughts, 4)
-	fmt.Println(GetThought(&thoughts, 3))
+	fmt.Println(GetThought(&thoughts, 0))
 	ReadAllThoughts(&thoughts)
 }
 
@@ -50,6 +50,8 @@ func DeleteThought(thoughts *[]Thought, thoughtId int) {
 }
 
 func GetThought(thoughts *[]Thought, thoughtId int) (Thought, error) {
+	//We are not handling errors
+
 	var tempThoughts []Thought
 	tempThoughts = *thoughts
 
