@@ -24,8 +24,7 @@ func main() {
 		},
 	}
 	CreateThought(&thoughts)
-	DeleteThought(&thoughts, 4)
-	fmt.Println(GetThought(&thoughts, 0))
+	UpdateThought(&thoughts,1,"Terminator")
 	ReadAllThoughts(&thoughts)
 }
 
@@ -61,6 +60,14 @@ func GetThought(thoughts *[]Thought, thoughtId int) (Thought, error) {
 		}
 	}
 	return tempThoughts[thoughtId-1], errors.New("does not exist")
+}
+
+func UpdateThought(thoughts *[]Thought, thoughtId int, newThought string){
+	for index, _ :=  range *thoughts{
+		if index+1 == thoughtId{
+			(*thoughts)[index].title = newThought
+		}
+	}
 }
 
 func ReadAllThoughts(thoughts *[]Thought) {
