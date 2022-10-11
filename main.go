@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"errors"
 	"fmt"
 	"os"
 )
@@ -23,9 +22,7 @@ func main() {
 			title: "create a JavaScript TwitterBot",
 		},
 	}
-	CreateThought(&thoughts)
-	UpdateThought(&thoughts,1,"Terminator")
-	ReadAllThoughts(&thoughts)
+	fmt.Println(GetThought(thoughts,2))
 }
 
 func CreateThought(thoughts *[]Thought) {
@@ -37,42 +34,32 @@ func CreateThought(thoughts *[]Thought) {
 	fmt.Println("Thought added successfully")
 }
 
-func DeleteThought(thoughts *[]Thought, thoughtId int) {
-	var tempThoughts []Thought
-	tempThoughts = *thoughts
-	for index, _ := range *thoughts {
+func GetThought(thoughts []Thought, thoughtId int) (string) {
+	for index, _ := range thoughts {
 		if index+1 == thoughtId {
-			tempThoughts = append(tempThoughts[:index], tempThoughts[index+1:]...)
-			*thoughts = tempThoughts
+			return thoughts[index].title
 		}
 	}
+	return thoughts[thoughtId-1].title
 }
 
-func GetThought(thoughts *[]Thought, thoughtId int) (Thought, error) {
-	//We are not handling errors
+func DelThought(thoughts []Thought, thoughtId int)  {
+	thoughts = append(thoughts[:thoughtId], thoughts[thoughtId+1:]...)
+}
 
-	var tempThoughts []Thought
-	tempThoughts = *thoughts
 
-	for index, _ := range *thoughts {
+func UpdateThought(thoughts []Thought, thoughtId int, newThought string) {
+	for index, _ := range thoughts {
 		if index+1 == thoughtId {
-			return tempThoughts[index], errors.New("")
+			(thoughts)[index].title = newThought
+			fmt.Println("Thought updated successfully")
+			return
 		}
 	}
-	return tempThoughts[thoughtId-1], errors.New("does not exist")
 }
 
-func UpdateThought(thoughts *[]Thought, thoughtId int, newThought string){
-	for index, _ :=  range *thoughts{
-		if index+1 == thoughtId{
-			(*thoughts)[index].title = newThought
-		}
-	}
-	fmt.Println("Thought updated successfully")
-}
-
-func ReadAllThoughts(thoughts *[]Thought) {
-	for _, thought := range *thoughts {
+func ReadAllThoughts(thoughts []Thought) {
+	for _, thought := range thoughts {
 		fmt.Println(thought.title)
 	}
 }
